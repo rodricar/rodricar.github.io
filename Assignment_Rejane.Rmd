@@ -1,0 +1,38 @@
+---
+title: "Assignment_R_Markdown_Rejane"
+author: "Rejane Rodrigues"
+date: "16, November 2021 - Brasília/Federal District, Brazil"
+output: html_document
+---
+
+## R Markdown
+
+This is an R Markdown document and I use the simple formatting syntax for HTML' outcome showing the map of my family's farm on the city Luziânia, state Goiás, Brazil.
+
+```{r farm}
+library(leaflet)
+library(dplyr)
+library(magrittr)
+
+selected_labels <- c("River", "FarmHouse", "Legal Reserve", "Water Mine", 
+                     "Pasture")
+selected_colors <- c("blue", "red", "green", "yellow", "purple")
+
+
+leaflet() %>% 
+ addTiles() %>%
+ addMarkers(lat = -16.27082370, lng = -48.13204413,
+            popup = "Jacobina' Farm in Luziânia, Goiás, Brazil") %>%
+ addRectangles(lng1 = -48.12507500, lat1 = -16.26688333, 
+               lng2 = -48.13903056, lat2 = -16.27655111, 
+               color = "#ff33fe", weight = 3, fillColor = "transparent") %>%
+ addCircleMarkers(lat = c(-16.27082370, -16.26920550, -16.26750523,
+                          -16.26780883, -16.27162345), 
+                  lng = c(-48.13702133, -48.13502133, -48.13204433, 
+                          -48.13204413, -48.12905500),
+                  label = selected_labels,
+                  color = selected_colors) %>%
+ addLegend(labels = selected_labels, colors = selected_colors)
+
+```
+
