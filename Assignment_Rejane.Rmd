@@ -7,7 +7,7 @@ output: html_document
 
 ## R Markdown
 
-This is an R Markdown document and I use the simple formatting syntax for HTML' outcome showing the map of my family's farm on the city Luziânia, state Goiás, Brazil.
+It is an R Markdown document and, I used the simple formatting syntax for HTML' outcome showing the map of my family's farm on the city Luziânia, state Goiás, Brazil.
 
 ```{r farm}
 library(leaflet)
