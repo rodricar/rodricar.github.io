@@ -1,0 +1,70 @@
+Endangered Species in Brazil
+========================================================
+author: Rejane Rodrigues de Carvalho Pereira
+date: November 22, 2021
+autosize: true
+
+
+Step 1 - Downloading and Reading the File (Code)
+========================================================
+
+```{r}
+library(tidyverse)
+
+
+# DOWNLOADING THE FILE.
+
+fileUrl <- "http://dados.mma.gov.br/dataset/41a79b71-445f-4a6a-8c70-d46af991292a/resource/1f13b062-f3f6-4198-a4c5-3581548bebec/download/lista-de-especies-ameacas-2020.csv"
+
+setwd("C:/Users/Rejane/Documents/Cursos_R/Developing_Data_Products/")
+
+download.file(fileUrl, 
+              destfile = "lista-de-especies-ameacas-2020.csv", 
+              method = "auto")
+
+# READING THE FILE.
+endangered_species <- data.table::fread("lista-de-especies-ameacas-2020.csv",                                           encoding = "UTF-8") %>%
+janitor::clean_names()
+                
+```
+
+Step 3 - Reading the File (Structure File)
+========================================================
+
+```{r}
+
+dplyr::glimpse(endangered_species)
+
+```
+
+Step 4 - Birds Endangered exclusive from Brazil
+========================================================
+
+```{r}
+# SELECTING ONLY THE BRASILIAN FAUNA's BIRDS.
+fauna <- endangered_species %>%
+         filter(fauna_flora %in% "Fauna" &
+                grupo %in% "Aves" &
+                especie_exclusiva_do_brasil %in% "Sim") %>%
+         select(-fauna_flora, -grupo, -especie_exclusiva_do_brasil)
+
+dplyr::glimpse(fauna)
+
+```
+
+PLOT: Fauna' Birds Endangered in Brazil
+
+```{r, echo = FALSE, fig.align = 'center', message = FALSE}
+library(plotly)
+p <- layout(plot_ly(endangered_species, 
+                    x = ~bioma, 
+                    y = ~nome_comum, 
+                    color = ~as.factor(categoria_de_ameaca),
+                    type = "scatter",
+                    mode = "markers",
+                    hovertext = "text"), 
+            title = "Fauna' Birds Endangered in Brazil"
+)
+
+p 
+```
